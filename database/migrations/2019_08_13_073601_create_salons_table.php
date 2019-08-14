@@ -16,6 +16,7 @@ class CreateSalonsTable extends Migration
         Schema::create('salons', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('address');
             $table->integer('user_id');
             $table->string('imgpath');
         });

@@ -4,16 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Bostonwood Furniture</title>
+    <title>Salon</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/css.css">
+    <link rel="stylesheet" href="{{ url('/') }}/css/bootstrap.css">
+    <link rel="stylesheet" href="{{ url('/') }}/css/css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
 <body>
     <nav class="navbar navbar-expand-xl fixed-top bg-white" id="navtop">
         <div class="container">
-            <a class="navbar-brand" href="index.html"><img src="img/salon.jpeg" alt=""></a>
+            <a class="navbar-brand" href="index.html"><img src="{{ url('/') }}/img/salon.jpeg" alt=""></a>
             <div class="nav-icon" id="nav-icon">
                 <span></span>
                 <span></span>
@@ -34,8 +36,14 @@
                     <li>
                         <a href="our-story.html">Customer</a>
                     </li>
-                    <li class="contact">
+                    <li>
                         <a href="contact.html">Profile</a>
+                    </li>
+                    <li class="contact">
+                        <form method="post" action="{{ url('/')}}/destroy">
+                          @csrf   
+                           <input type="submit" name="logout" class="btn btn-primary" style="margin-top: -6px;" value="Logout">
+                        </form>
                     </li>
                 </ul>
             </div>
@@ -50,30 +58,15 @@
       </div>
   
 
-    <script src="js/jquery.min.js"></script>
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-    function readURL(input) {
-    if (input.files && input.files[0]) {
-    var reader = new FileReader();
-    reader.onload = function(e) 
-    {
-        var fileName =$('#imgInp').val();
-        var file_extension = fileName.split('.').pop(); 
-        if (file_extension=="jpg" || file_extension=="jpeg" || file_extension=="png" || file_extension=="gif")
-        {
-            $('#blah').show();
-            $('#blah').attr('src', e.target.result);
-        }else{
-          alert("It is a invalid extension. Only jpg, gif, png, jpeg are allowed.")
-        }
-    }
-    reader.readAsDataURL(input.files[0]);
-   }
-   }$("#imgInp").change(function() {
-    readURL(this);
-   });
+    <script src="{{ url('/') }}/js/jquery.min.js"></script>
+    <script src="{{ url('/') }}/js/jquery.js"></script>
+    <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script> <script src="{{ url('/') }}/js/worker.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
+
+
+<script type="text/javascript">
+
 </script>
 
 </body>
