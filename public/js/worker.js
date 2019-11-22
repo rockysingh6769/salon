@@ -47,13 +47,16 @@ $('#addbtn').click(function()
     }else{
       $('.address').hide();
     } 
+    
+
     var abc = "check";
+    alert(abc);
     $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
     });
-    var form_data = new FormData($('form')[0]);
+    var form_data = new FormData($('#myform')[0]);
     $.ajax(
     { 
         type : 'POST',
@@ -63,6 +66,11 @@ $('#addbtn').click(function()
         contentType: false,
         success: function(response) 
         {    
+          if(response == 'wrong')
+          {
+            $('.address').show();
+            $('.address').text('Wrong Address');
+          }
           if(response == 'success')
           {
             location.reload(true);
@@ -187,28 +195,46 @@ $(document).on('click','#salonbtn',function(){
         data: {id:id},
         success: function(result) 
         {  
-           console.log(result.salon_name);
+           console.log(result);
            $('#salon_name').text(result.salon_name);
            $('#owner_name').val(result.owner);
            $('#salon_email').val(result.email);
            $('#salon_contact').val(result.number);
            $('#salon_address').val(result.address);
            $('#salon_img').attr('src',""+base_url+"/uploads/"+result.imgpath);
-           $('#map_attr').attr('lat','');
+           showCloseLocations(result.lat,result.lan);
         }
     }); 
 });
 
-function initMap(lat, lng) {
-var lat =  30.7208817;
-var lng = 76.8591235;
-// The location of Uluru
-  var uluru = {lat: lat, lng: lng};
+
+function showCloseLocations(lat,lng){
+var lat = lat;
+var lng = lng;
+var uluru = {
+          lat : parseFloat( lat ),
+          lng : parseFloat( lng )
+      };
   // The map, centered at Uluru
   var map = new google.maps.Map(
   document.getElementById('map'), {zoom: 15, center: uluru});
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: uluru, map: map});
+
+
 }
 
 
+
+
+
+
+ //  $('#file_img').change(function() {
+ //           var allowed = ["jpg", "jpeg", "png",'gif'];
+ //           var filename=$('#file_img').val();
+ //           var file_extension = filename.split('.').pop();  
+ //           if(!(allowed.includes(file_extension)) ) {
+ //              alert("It is a invalid extension. Only jpg, gif, png, jpeg are allowed.");
+ //                return false;
+ //           }
+ // }); 

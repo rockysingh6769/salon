@@ -4,13 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\salon;
+use Auth;
+use DB;
 
 class CustomerController extends Controller
 {
     public function index()
     {
-    	$salons=salon::all(); 
-    	return view('customer.index',compact("salons"));
+        $lat = Auth::user()->lat;
+        $lon = Auth::user()->long;
+        $distance = 5; 
+        $R = 6371;
+        $maxLat = $lat + rad2deg($distance/$R);
+        $minLat = $lat - rad2deg($distance/$R);
+        $maxLon = $lon + rad2deg(asin($distance/$R) / cos(deg2rad($lat)));
+        $minLon = $lon - rad2deg(asin($distance/$R) / cos(deg2rad($lat)));
+        $salons = salon::getlist($maxLat,$minLat,$maxLon,$minLon);        
+        return view('customer.index',compact("salons"));
     }
     public function viewsalon(Request $request)
     {
@@ -26,13 +36,8 @@ class CustomerController extends Controller
              $list['salon_name'] = $salon->name;
   	         $list['imgpath'] = $salon->imgpath;
              $list['address'] = $salon->address; 
-             $address = $salon->address; 
-             $prepAddr = str_replace(' ','+',$address);
-             $sd = urlencode( $prepAddr );
-             $geocode=file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$sd.'&key=');
-             $output  = json_decode($geocode);
-             $list['lat'] = $output->results[0]->geometry->location->lat;
-  	         $list['lan'] = $output->results[0]->geometry->location->lng;
+             $list['lat'] = $salon->lat;
+  	         $list['lan'] = $salon->long;
              return $list;
     	} 
     }

@@ -25,8 +25,10 @@ Route::get('/', function () {
 
 Route::get('worker', 'UsersController@worker');
 Route::get('customer', 'UsersController@customer');
+Route::get('profile','UsersController@profile');
 
-Route::post('worker', 'UsersController@store')->middleware('auth');
+
+Route::post('worker', 'UsersController@store');
 Route::post('customer', 'UsersController@store');
 Route::post('/getstates','UsersController@getstates');
 //Route::post('/login','UsersController@login');

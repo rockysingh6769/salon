@@ -24,21 +24,26 @@
             </div>
             <div class="navbar-links" id="mainnav">
                 <ul class="navbar-nav ml-auto">
+                    <li>
+                        <a href="#">Welcome<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li>
+                        <a href="#">Product</a>
+                    </li>
+                    <li>
+                        <a href="#">Customer</a>
+                    </li>
                     <li class="active">
-                        <a href="index.html">Welcome<span class="sr-only">(current)</span></a>
+                        <a href="/profile">Profile</a>
                     </li>
-                    <li>
-                        <a href="product.html">Product</a>
+                    <?php if(Auth::user()->role_id == 4) { ?>
+                    <li class="active" style="margin-top: -5px;">
+                        <form class="form-inline my-2 my-lg-0">
+                          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                         <button class="btn btn-outline-success my-2 my-sm-0" id="" type="submit">Search</button>
+                        </form>
                     </li>
-                    <li>
-                        <a href="#">About</a>
-                    </li>
-                    <li>
-                        <a href="our-story.html">Customer</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Profile</a>
-                    </li>
+                    <?php  }  ?>    
                     <li class="contact">
                         <form method="post" action="{{ url('/')}}/destroy">
                           @csrf   
@@ -61,14 +66,16 @@
     <script src="{{ url('/') }}/js/jquery.min.js"></script>
     <script src="{{ url('/') }}/js/jquery.js"></script>
     <script src="{{ url('/') }}/js/bootstrap.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js"></script> <script src="{{ url('/') }}/js/worker.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=initMap"></script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js">
+    </script><script src="{{ url('/') }}/js/worker.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key="></script>
+  <script src="https://www.huratips.com/tech-tips/get-visitors-location-redirect-right-store-shopify.html">
+</script> 
 <script type="text/javascript">
-
+$.get("https://api.ipdata.co/?api-key=test", function (response) {
+    console.log(response);
+}, "jsonp");
 </script>
-
 </body>
 
 </html>

@@ -24,7 +24,7 @@ if(isset($_POST['submit_address']))
   $address =$_POST['address']; // Google HQ
   $prepAddr = str_replace(' ','+',$address);
   $sd = urlencode( $prepAddr );
-  $geocode=file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$sd.'&key=');
+  $geocode=file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$sd.'&key=AIzaSyC-Cco4bsvBySwkZesWzDsI-1k0TV29jbM');
   $output= json_decode($geocode);
   $latitude = $output->results[0]->geometry->location->lat;
   $longitude = $output->results[0]->geometry->location->lng;

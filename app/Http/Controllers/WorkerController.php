@@ -9,35 +9,26 @@ use Auth;
 
 class WorkerController extends Controller
 {
-    public function checksession()
-    {
-       return 'aaa';
-       if(!auth::user())
-       {
-         redirect('login');
-       }
-    }
+    
 
     public function index()
     {
-        $this->checksession(); 
-        $user_id = '1';
-        $salons = salon::whereIn('user_id',[$user_id])->get();
+        $user_id = Auth::user()->id;
+        $salons  = salon::whereIn('user_id',[$user_id])->get();
         return  view('worker.index',compact('salons'));
     } 
-
-
+ 
     public function addsalon(Request $request)
     {
         $data = new salon; 
         $data->name = $request->name;
         $data->address = $request->address;
-        $data->user_id = '1';
+        $data->user_id = Auth::user()->id;
         $check = 'true';  
         $file = $request->file('imgpath');
         if(!empty($file))
         {   
-        	$file_name =  $file->getClientOriginalName();
+         	$file_name =  $file->getClientOriginalName();
 	        $file_extension  = $file->getClientOriginalExtension();
 	        $destinationPath = 'uploads';
 	        if($file_extension == 'jpg' || $file_extension == 'jpeg' || $file_extension == 'png' || 
@@ -53,10 +44,39 @@ class WorkerController extends Controller
         }
         if($check == 'true')
         {
-            $data->save();
+            $response = $this->checkaddress($request->address);
+            if($response == 'wrong'){
+                return 'wrong';
+            }else{
+             $data->lat = $response['lat'];
+             $data->long = $response['long'];
+             $data->save();
+             return 'success';
+            }
         }
         return 'success';
-    }  
+    } 
+    public function checkaddress($address)
+    {
+        $prepAddr = str_replace(' ','+',$address);
+        $sd = urlencode( $prepAddr );
+       
+        $geocode=file_get_contents('https://maps.googleapis.com/maps/api/geocode/json?address='.$sd.'&key=');
+        $output  = json_decode($geocode);
+        $status = $output->status;
+        if( $status != 'OK' )
+        {
+            return 'wrong';
+        }else
+        {
+           $latitude = $output->results[0]->geometry->location->lat;
+           $longitude = $output->results[0]->geometry->location->lng;
+           $response = [];
+           $response['lat']=$latitude;
+           $response['long'] =$longitude; 
+           return $response;
+        }
+    } 
     public function editsalon(Request $request)
     {
         if(!empty($request->id))

@@ -3,6 +3,8 @@
 @section('body')
 
 
+<div style="width: 100%; font-size: 26px;"><center><b><i>Listing of Near 5 kilometers Salons</i></b></center><br></div>
+
 @foreach($salons as $salon)
 
 <div class="responsive" id="base_url" base_url="{{ url('/') }}">
@@ -46,7 +48,7 @@
                 <div class="form-group">
                 <label for="exampleFormControlInput1">Location</label>
                 <input type="email" class="form-control" disabled id="salon_address">
-                <input type="hidden" id="map_attr"  name="">
+                <input type="hidden" id="map_attr" lat="30.7208817" lng="76.8591235"  name="">
                <div id="map"></div>
               </div>
             

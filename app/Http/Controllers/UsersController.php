@@ -23,8 +23,6 @@ class UsersController extends Controller
     	  $countryies=country::all();
   	    return view('signup',compact('role','countryies','url'));
     }
-
-
     public function customer()
     {
       	$role = 4;
@@ -32,7 +30,6 @@ class UsersController extends Controller
     	  $countryies=country::all();
     	  return view('signup',compact('role','countryies','url'));
     }
-
     public function getstates(Request $request)
     {
         if(!empty($request->country_id)){
@@ -59,6 +56,11 @@ class UsersController extends Controller
 
     // }
 
+    public function profile()
+    {
+      return view('profile');
+
+    }
     public function store(Request $request)
     {
         
@@ -67,7 +69,7 @@ class UsersController extends Controller
                'fname'     => 'required',
                'lname'     => 'required',
                'number'    => 'required',
-               'email'     => 'required|unique:users',
+               'email'     => 'required|email|unique:users',
                'password'  => 'required',
                'cpassword' => 'required|same:password',
                'address'   => ['required', new GoogleMapAddress],

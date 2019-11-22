@@ -6,7 +6,7 @@
 <form  method="post" id="myform" class="text-center border border-light p-5" action="/login">
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
              
-    <p class="mb-4">Sign in</p>
+    <p class="mb-4"><i>Sign In</i></p>
 
     <!-- Email -->
     <input type="email" name="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
@@ -27,11 +27,11 @@
     </div>
 
     <!-- Sign in button -->
-    <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+    <button class="btn btn-info btn-block my-4" type="submit"><i>Sign in</i></button>
 
     <!-- Register -->
     <p>
-        <a href="">Sign Up</a>
+        <a href="/">Sign Up</a>
     </p>
 
     <!-- Social login -->

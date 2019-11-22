@@ -4,7 +4,7 @@
 <div class="container">
             <form class="form-horizontal" id="myform" accept="/{{ $url }}" method="post" role="form">
              <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-                <h2><b>Sign Up</b></h2>
+                <h2><i>Sign Up</i></h2>
                 <div class="form-group">
                     <label for="firstName" class="col-sm-3 control-label">First Name</label>
                     <div class="col-sm-9">
@@ -90,7 +90,10 @@
                         <input type="hidden"  class="" name="role_id" value="{{ $role }}">
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">sign up</button>
+               <button type="submit" class="btn btn-primary btn-block"><i>Sign Up</i></button>
+               <center>Already have an account<p><a href="/login"><i>Log In</i></a></p><center>
+
+
             </form> <!-- /form -->
 </div> <!-- ./container -->
 
